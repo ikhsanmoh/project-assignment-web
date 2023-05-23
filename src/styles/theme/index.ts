@@ -7,5 +7,8 @@ export const theme = createTheme({
       light: "#FFAF66",
       dark: "#E66D00",
     },
+    text: {
+      primary: "#42494D",
+    },
   },
 });
