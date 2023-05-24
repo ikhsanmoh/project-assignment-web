@@ -32,9 +32,9 @@ export const BaseLayout: NextPage<BaseLayoutProps> = memo((props) => {
       <main>
         <Container maxWidth="lg">
           <Header />
-
-          {children}
         </Container>
+
+        {children}
       </main>
     </>
   );
