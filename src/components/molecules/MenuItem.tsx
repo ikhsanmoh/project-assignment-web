@@ -23,7 +23,7 @@ export const MenuItem: FC<MenuItemProps> = (props) => {
     <Box {...rest}>
       <Link href={path} style={{ textDecoration: "none" }}>
         <Typography
-          color={isActive ? "warning.main" : "text.primary"}
+          color={isActive ? "warning.main" : "neutral.dark"}
           fontWeight={isActive ? "700" : "400"}
           fontSize={16}
         >
