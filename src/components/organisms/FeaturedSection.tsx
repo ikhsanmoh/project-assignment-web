@@ -1,10 +1,17 @@
+import type { FC } from "react";
 import Image from "next/image";
 import { Container, Box, Typography } from "@mui/material";
 
 // Components
 import { Button } from "@components/atoms";
 
-export const FeaturedSection = () => {
+export interface FeaturedSectionProps {
+  goToPokemonSection?: () => void;
+}
+
+export const FeaturedSection: FC<FeaturedSectionProps> = (props) => {
+  const { goToPokemonSection } = props;
+
   return (
     <Container maxWidth="lg">
       <Box display="flex" position="relative" alignItems="center" height={768}>
@@ -33,6 +40,7 @@ export const FeaturedSection = () => {
             textWeight="700"
             textSize={20}
             mt={4}
+            onClick={goToPokemonSection}
           />
         </Box>
         <Image
