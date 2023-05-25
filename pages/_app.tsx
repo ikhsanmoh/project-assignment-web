@@ -1,6 +1,8 @@
 import React from "react";
 import { AppProps } from "next/app";
 import { ThemeProvider } from "@mui/material";
+import { store } from "@redux";
+import { Provider } from "react-redux";
 
 // Styles
 import { theme } from "@styles/theme";
@@ -10,7 +12,9 @@ import "@styles/vars.css";
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     </ThemeProvider>
   );
 }
