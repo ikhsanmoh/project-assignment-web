@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import NextImage from "next/image";
 import {
   Box,
   Card,
@@ -20,10 +20,10 @@ import {
 import { Close as IconClose } from "@mui/icons-material";
 
 // Comopnents
-import { BadgeType, Button } from "@components/atoms";
+import { BadgeType, Button, Image } from "@components/atoms";
 
 // Hooks
-import { usePokemonModal } from "src/hooks";
+import { usePokemonModal, useScreen } from "src/hooks";
 
 // Styles
 const cardStyle = {
@@ -44,6 +44,7 @@ export interface PokemonModalProps {
 export const PokemonModal: FC<PokemonModalProps> = (props) => {
   const { visible, onClose } = props;
 
+  const { isDesktop } = useScreen();
   const router = useRouter();
   const { state } = usePokemonModal();
   const { item } = state;
@@ -68,118 +69,117 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
     );
   };
 
-  const renderContent = () => {
+  const renderDimension = () => {
     return (
-      <Stack mt={2}>
-        <Stack
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          spacing={12}
+      <Stack
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        spacing={12}
+      >
+        <Typography
+          className="transition-modal-description"
+          fontWeight={700}
+          fontSize={20}
+          lineHeight="30px"
+          color="neutral.dark"
         >
+          Weight:
           <Typography
-            className="transition-modal-description"
-            fontWeight={700}
+            component={"span"}
+            fontWeight={400}
             fontSize={20}
             lineHeight="30px"
+            ml={4}
             color="neutral.dark"
           >
-            Weight:
-            <Typography
-              component={"span"}
-              fontWeight={400}
-              fontSize={20}
-              lineHeight="30px"
-              ml={4}
-              color="neutral.dark"
-            >
-              {item?.weight}
-            </Typography>
+            {item?.weight}
           </Typography>
+        </Typography>
 
-          <Typography
-            className="transition-modal-description"
-            fontWeight={700}
-            fontSize={20}
-            lineHeight="30px"
-            color="neutral.dark"
-          >
-            Height:
-            <Typography
-              component={"span"}
-              fontWeight={400}
-              fontSize={20}
-              lineHeight="30px"
-              ml={4}
-              color="neutral.dark"
-            >
-              {item?.height}
-            </Typography>
-          </Typography>
-        </Stack>
-
-        <Stack
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          spacing={4}
-          mt={2}
+        <Typography
+          className="transition-modal-description"
+          fontWeight={700}
+          fontSize={20}
+          lineHeight="30px"
+          color="neutral.dark"
         >
+          Height:
           <Typography
-            className="transition-modal-description"
-            fontWeight={700}
+            component={"span"}
+            fontWeight={400}
             fontSize={20}
             lineHeight="30px"
+            ml={4}
             color="neutral.dark"
           >
-            Abilities:
+            {item?.height}
           </Typography>
-          <List sx={{ pt: 0 }}>
-            {item?.abilities.map((ability: any, idx: number) => (
-              <ListItem key={idx} sx={{ pt: 0 }}>
-                <Typography
-                  component={"span"}
-                  fontWeight={400}
-                  fontSize={20}
-                  lineHeight="30px"
-                  color="neutral.dark"
-                >
-                  &#x2022; {ability.ability.name}
-                </Typography>
-              </ListItem>
-            ))}
-          </List>
-        </Stack>
+        </Typography>
+      </Stack>
+    );
+  };
 
-        <Stack
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="flex-start"
-          spacing={12}
-          mt={2}
+  const renderAbilities = () => {
+    return (
+      <Stack
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        spacing={4}
+        mt={2}
+      >
+        <Typography
+          className="transition-modal-description"
+          fontWeight={700}
+          fontSize={20}
+          lineHeight="30px"
+          color="neutral.dark"
         >
-          <Typography
-            className="transition-modal-description"
-            fontWeight={700}
-            fontSize={20}
-            lineHeight="30px"
-            color="neutral.dark"
-          >
-            Type:
-          </Typography>
-          <Stack direction="row" gap={"20px"}>
-            {item?.types.map((type: any, idx: number) => (
-              <BadgeType key={idx} label={type.type.name} type={type.slot} />
-            ))}
-          </Stack>
-        </Stack>
+          Abilities:
+        </Typography>
+        <List sx={{ pt: 0 }}>
+          {item?.abilities.map((ability: any, idx: number) => (
+            <ListItem key={idx} sx={{ pt: 0 }}>
+              <Typography
+                component={"span"}
+                fontWeight={400}
+                fontSize={20}
+                lineHeight="30px"
+                color="neutral.dark"
+              >
+                &#x2022; {ability?.ability?.name}
+              </Typography>
+            </ListItem>
+          ))}
+        </List>
+      </Stack>
+    );
+  };
 
-        <Button
-          text="More Detail"
-          textColor="white"
-          mt={8}
-          onClick={seeDetail}
-        />
+  const renderTypes = () => {
+    return (
+      <Stack
+        direction="row"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        spacing={12}
+        mt={2}
+      >
+        <Typography
+          className="transition-modal-description"
+          fontWeight={700}
+          fontSize={20}
+          lineHeight="30px"
+          color="neutral.dark"
+        >
+          Type:
+        </Typography>
+        <Stack direction="row" gap={"20px"}>
+          {item?.types.map((type: any, idx: number) => (
+            <BadgeType key={idx} label={type?.type?.name} type={type?.slot} />
+          ))}
+        </Stack>
       </Stack>
     );
   };
@@ -209,34 +209,36 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
           />
 
           <CardContent sx={{ pt: 0, px: "30px", pb: "40px" }}>
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="flex-start"
-              columnGap="26px"
+            <Box
+              display="flex"
+              flexDirection={isDesktop ? "row" : "column"}
+              alignItems={isDesktop ? "start" : "center"}
             >
-              <Box
-                width={400}
-                height={400}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                position="relative"
-                sx={{ backgroundColor: "lightgray" }}
-              >
+              <Box width={400}>
                 <Image
-                  src={item?.sprites.front_default ?? ""}
-                  alt="Pokemon Image"
-                  style={{ position: "absolute" }}
-                  fill
+                  src={item?.sprites?.front_default ?? ""}
+                  alt="Image Pokemon"
+                  size={400}
                 />
               </Box>
-              <Box maxWidth="666px">
+
+              <Box pt={3} ml={2}>
                 {renderTitle()}
 
-                {renderContent()}
+                <Box mt={4}>
+                  {renderDimension()}
+                  {renderAbilities()}
+                  {renderTypes()}
+
+                  <Button
+                    text="More Detail"
+                    textColor="white"
+                    mt={8}
+                    onClick={seeDetail}
+                  />
+                </Box>
               </Box>
-            </Stack>
+            </Box>
           </CardContent>
         </Card>
       </Fade>
