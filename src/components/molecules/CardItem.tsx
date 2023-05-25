@@ -1,17 +1,21 @@
+import type { FC } from "react";
 import Image from "next/image";
 import {
   Box,
   Typography,
   Stack,
-  Chip,
   Card,
   CardActionArea,
   CardMedia,
   CardContent,
 } from "@mui/material";
-import type { FC } from "react";
+
+// Components
 import { BadgeType } from "@components/atoms";
 import { TYPE_LIST } from "@constants/dummy";
+
+// Hooks
+import { usePokemonModal } from "src/hooks";
 
 export type PokeItem = {
   imageSrc?: string;
@@ -27,6 +31,8 @@ export interface CardItemProps {
 export const CardItem: FC<CardItemProps> = (props) => {
   const { item } = props;
 
+  const { handleOpenModal } = usePokemonModal();
+
   const renderTypes = () => {
     return (
       <Stack direction="row" gap={1} flexWrap={"wrap"}>
@@ -39,7 +45,7 @@ export const CardItem: FC<CardItemProps> = (props) => {
 
   return (
     <Card sx={{ minWidth: 275, borderRadius: 3 }}>
-      <CardActionArea>
+      <CardActionArea onClick={() => handleOpenModal({ name: "Pikacuu" })}>
         <Box sx={{ py: "25px", px: "10px" }}>
           <CardMedia>
             <Box width={275} height={275} position={"relative"}>

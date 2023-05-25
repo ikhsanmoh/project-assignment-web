@@ -9,19 +9,12 @@ import { theme } from "@styles/theme";
 import { FeaturedSection, PokemonList } from "@components/organisms";
 import { POKEMON_LIST } from "@constants/dummy";
 import { PokemonModal } from "@components/molecules";
-import { useState } from "react";
+import { usePokemonModal } from "src/hooks";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
-  const [modal, setModal] = useState(false);
 
-  const handleOpenModal = () => {
-    setModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setModal(false);
-  };
+  const { state: isModalVisible, handleCloseModal } = usePokemonModal();
 
   return (
     <BaseLayout>
@@ -32,7 +25,6 @@ const Home: NextPage = () => {
         sx={{ backgroundColor: theme.palette.warning.light }}
         py={10}
       >
-        <button onClick={handleOpenModal}>OPEN MODAL</button>
         <Image
           src={"/images/featured-image-3.png"}
           width={300}
@@ -74,7 +66,7 @@ const Home: NextPage = () => {
         </Container>
       </Box>
 
-      <PokemonModal visible={modal} onClose={handleCloseModal} />
+      <PokemonModal visible={isModalVisible} onClose={handleCloseModal} />
     </BaseLayout>
   );
 };
