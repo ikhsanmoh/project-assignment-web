@@ -15,13 +15,7 @@ import { BadgeType } from "@components/atoms";
 
 // Hooks
 import { usePokemonModal } from "src/hooks";
-
-export type PokeItem = {
-  imageSrc?: string;
-  title?: string;
-  codeTag?: string;
-  types?: string[];
-};
+import { formatNumberWithZeros } from "@utils/string-util";
 
 export interface CardItemProps {
   item: any;
@@ -67,7 +61,7 @@ export const CardItem: FC<CardItemProps> = (props) => {
               fontSize={20}
               fontWeight={700}
             >
-              #00{item.id}
+              {formatNumberWithZeros(item.id, 3)}
             </Typography>
             <Typography
               color="neutral.dark"
