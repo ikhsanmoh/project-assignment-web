@@ -26,7 +26,7 @@ export const pokemonModalSlice = createSlice({
     },
     openModal: (state, action: PayloadAction<PokemonDetail>) => {
       state.visible = true;
-      state.item = { ...state.item, ...action };
+      state.item = { ...state.item, ...action.payload };
     },
   },
 });
@@ -34,7 +34,6 @@ export const pokemonModalSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { toggleModal, openModal, closeModal } = pokemonModalSlice.actions;
 
-export const selectPokemonModalValue = (state: RootState) =>
-  state.pokemonModal.visible;
+export const selectPokemonModalValue = (state: RootState) => state.pokemonModal;
 
 export default pokemonModalSlice.reducer;

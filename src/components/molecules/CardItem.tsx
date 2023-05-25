@@ -12,7 +12,6 @@ import {
 
 // Components
 import { BadgeType } from "@components/atoms";
-import { TYPE_LIST } from "@constants/dummy";
 
 // Hooks
 import { usePokemonModal } from "src/hooks";
@@ -36,8 +35,8 @@ export const CardItem: FC<CardItemProps> = (props) => {
   const renderTypes = () => {
     return (
       <Stack direction="row" gap={1} flexWrap={"wrap"}>
-        {TYPE_LIST.map((item: any, idx) => (
-          <BadgeType key={idx} label={item.name} type={item.type} />
+        {item.types.map((item: any, idx: number) => (
+          <BadgeType key={idx} label={`Type ${item.slot}`} type={item.slot} />
         ))}
       </Stack>
     );
@@ -45,12 +44,12 @@ export const CardItem: FC<CardItemProps> = (props) => {
 
   return (
     <Card sx={{ minWidth: 275, borderRadius: 3 }}>
-      <CardActionArea onClick={() => handleOpenModal({ name: "Pikacuu" })}>
+      <CardActionArea onClick={() => handleOpenModal(item)}>
         <Box sx={{ py: "25px", px: "10px" }}>
-          <CardMedia>
-            <Box width={275} height={275} position={"relative"}>
+          <CardMedia sx={{ display: "flex", justifyContent: "center" }}>
+            <Box flex={1} height={275} position={"relative"}>
               <Image
-                src={"/images/featured-image.jpg"}
+                src={item.sprites.front_default ?? "/images/featured-image.jpg"}
                 alt="Pokemon Image"
                 style={{ position: "absolute" }}
                 fill
@@ -66,7 +65,7 @@ export const CardItem: FC<CardItemProps> = (props) => {
               fontSize={20}
               fontWeight={700}
             >
-              #001
+              #00{item.id}
             </Typography>
             <Typography
               color="neutral.dark"
@@ -75,7 +74,7 @@ export const CardItem: FC<CardItemProps> = (props) => {
               fontSize={40}
               fontWeight={700}
             >
-              Poke Name
+              {item.name}
             </Typography>
 
             {renderTypes()}

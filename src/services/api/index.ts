@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GetPokemonApi } from "./api.types";
+import { GetPokemonApi, GetPokemonDetailApi } from "./api.types";
 
 const BASE_URL = "https://pokeapi.co/api/v2";
 
@@ -26,8 +26,13 @@ const create = (
     return api.get(`/pokemon?${param}`);
   };
 
+  const getPokemonDetail: GetPokemonDetailApi = (slug) => {
+    return api.get(`/pokemon/${slug}`);
+  };
+
   return {
     getPokemons,
+    getPokemonDetail,
     api,
   };
 };

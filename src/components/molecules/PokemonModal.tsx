@@ -1,8 +1,5 @@
-import Backdrop from "@mui/material/Backdrop";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import Typography from "@mui/material/Typography";
 import type { FC } from "react";
+import Image from "next/image";
 import {
   Box,
   Card,
@@ -11,35 +8,41 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
   Stack,
+  Typography,
+  Fade,
+  Modal,
+  Backdrop,
 } from "@mui/material";
+import { Close as IconClose } from "@mui/icons-material";
 
-import { Circle as IconCircle, Close as IconClose } from "@mui/icons-material";
+// Comopnents
 import { BadgeType, Button } from "@components/atoms";
-import { TYPE_LIST } from "@constants/dummy";
 
-const style = {
+// Hooks
+import { usePokemonModal } from "src/hooks";
+
+// Styles
+const cardStyle = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  minWidth: 400,
   boxShadow: 24,
-  p: 4,
+  borderRadius: 3,
 };
 
 export interface PokemonModalProps {
   visible: boolean;
-  onOpen?: () => void;
   onClose: () => void;
 }
 
 export const PokemonModal: FC<PokemonModalProps> = (props) => {
-  const { visible, onClose, onOpen } = props;
+  const { visible, onClose } = props;
+
+  const { state } = usePokemonModal();
+  const { item } = state;
 
   const renderTitle = () => {
     return (
@@ -51,7 +54,7 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
         color="neutral.dark"
         noWrap
       >
-        Pokemon Name
+        {item?.name}
       </Typography>
     );
   };
@@ -81,7 +84,7 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
               ml={4}
               color="neutral.dark"
             >
-              9999
+              {item?.weight}
             </Typography>
           </Typography>
 
@@ -101,7 +104,7 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
               ml={4}
               color="neutral.dark"
             >
-              999
+              {item?.height}
             </Typography>
           </Typography>
         </Stack>
@@ -123,28 +126,19 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
             Abilities:
           </Typography>
           <List sx={{ pt: 0 }}>
-            <ListItem sx={{ pt: 0 }}>
-              <Typography
-                component={"span"}
-                fontWeight={400}
-                fontSize={20}
-                lineHeight="30px"
-                color="neutral.dark"
-              >
-                &#x2022; Abilities 1
-              </Typography>
-            </ListItem>
-            <ListItem>
-              <Typography
-                component={"span"}
-                fontWeight={400}
-                fontSize={20}
-                lineHeight="30px"
-                color="neutral.dark"
-              >
-                &#x2022; Abilities 2
-              </Typography>
-            </ListItem>
+            {item?.abilities.map((ability: any, idx: number) => (
+              <ListItem key={idx} sx={{ pt: 0 }}>
+                <Typography
+                  component={"span"}
+                  fontWeight={400}
+                  fontSize={20}
+                  lineHeight="30px"
+                  color="neutral.dark"
+                >
+                  &#x2022; {ability.ability.name}
+                </Typography>
+              </ListItem>
+            ))}
           </List>
         </Stack>
 
@@ -165,8 +159,8 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
             Type:
           </Typography>
           <Stack direction="row" gap={"20px"}>
-            {TYPE_LIST.map((item: any, idx) => (
-              <BadgeType key={idx} label={item.name} type={item.type} />
+            {item?.types.map((type: any, idx: number) => (
+              <BadgeType key={idx} label={type.type.name} type={type.slot} />
             ))}
           </Stack>
         </Stack>
@@ -191,17 +185,7 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
       }}
     >
       <Fade in={visible}>
-        <Card
-          sx={{
-            position: "absolute" as "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            minWidth: 400,
-            boxShadow: 24,
-            borderRadius: 3,
-          }}
-        >
+        <Card sx={cardStyle}>
           <CardHeader
             action={
               <IconButton onClick={onClose}>
@@ -223,9 +207,15 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                position="relative"
                 sx={{ backgroundColor: "lightgray" }}
               >
-                Pokemon Images Placeholder
+                <Image
+                  src={item?.sprites.front_default ?? ""}
+                  alt="Pokemon Image"
+                  style={{ position: "absolute" }}
+                  fill
+                />
               </Box>
               <Box maxWidth="666px">
                 {renderTitle()}

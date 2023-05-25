@@ -14,7 +14,18 @@ export const usePokemons = () => {
     }
   };
 
+  const getPokemonDetail = async (slug: string) => {
+    const response = await api.getPokemonDetail(slug);
+
+    if (response.status !== 200) {
+      throw response;
+    } else {
+      return response.data;
+    }
+  };
+
   return {
     getPokemons,
+    getPokemonDetail,
   };
 };

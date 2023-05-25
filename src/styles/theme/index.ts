@@ -12,13 +12,18 @@ export const theme = createTheme({
       light: "#FFCB3B",
       dark: "#E66D00",
     },
-  },
-  components: {
-    MuiChip: {
-      styleOverrides: {
-        colorPrimary: "#E6AB09",
-        colorSuccess: "#42494D",
-      },
+    green: {
+      main: "#01B956",
+    },
+    red: {
+      main: "#DE2C2C",
+    },
+    orange: {
+      main: "#E66D00",
+      light: "#FFAF66",
+    },
+    pink: {
+      main: "#E34C88",
     },
   },
 });

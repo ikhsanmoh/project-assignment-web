@@ -19,13 +19,19 @@ export interface PaginationPayload {
   offset?: number;
 }
 
-export type GetPokemonResponse = {
+export interface GetPokemonResponse {
   count: number;
   next: string | null;
   previous: string | null;
   results: IPokemon[];
-};
+}
 
 export type GetPokemonApi = (
   payload?: PaginationPayload,
 ) => Promise<GeneralApiResponse<GetPokemonResponse>>;
+
+export type GetPokemonDetailResponse = any;
+
+export type GetPokemonDetailApi = (
+  slug: string,
+) => Promise<GeneralApiResponse<GetPokemonDetailResponse>>;

@@ -1,7 +1,10 @@
+import type { GetPokemonDetailResponse } from "@services/api/api.types";
 import { NextPage } from "next";
 import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
 import useTranslation from "next-translate/useTranslation";
 import { Box, Container, Typography } from "@mui/material";
+import { getSlug } from "@utils/string-util";
 
 // Styles
 import { theme } from "@styles/theme";
@@ -13,15 +16,40 @@ import { PokemonModal } from "@components/molecules";
 
 // Hooks
 import { usePokemonModal, useScroll } from "src/hooks";
-
-// Dummy
-import { POKEMON_LIST } from "@constants/dummy";
+import { usePokemons } from "@services/query/usePokemon";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
+  const [data, setData] = useState<GetPokemonDetailResponse>(null);
 
-  const { state: isModalVisible, handleCloseModal } = usePokemonModal();
+  const { state, handleCloseModal } = usePokemonModal();
   const { scrollTo, scrollToRef } = useScroll();
+
+  const { getPokemons, getPokemonDetail } = usePokemons();
+
+  const pokemons = useMemo(() => data, [data]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await getPokemons({ limit: 5, offset: 5 });
+
+        if (res.results.length) {
+          const fetchPokemonsDataset = res.results.map(async (item) => {
+            const slug = getSlug(item.url);
+
+            return await getPokemonDetail(slug);
+          });
+
+          await Promise.all(fetchPokemonsDataset)
+            .then((data) => setData(data))
+            .catch((e) => console.log(e));
+        }
+      } catch (error) {
+        console.log("err => ", error);
+      }
+    })();
+  }, []);
 
   return (
     <BaseLayout>
@@ -70,11 +98,11 @@ const Home: NextPage = () => {
             </Typography>
           </Box>
 
-          <PokemonList data={POKEMON_LIST as any} mt={4} />
+          {data && <PokemonList data={pokemons as any} mt={4} />}
         </Container>
       </Box>
 
-      <PokemonModal visible={isModalVisible} onClose={handleCloseModal} />
+      <PokemonModal visible={state.visible} onClose={handleCloseModal} />
     </BaseLayout>
   );
 };
