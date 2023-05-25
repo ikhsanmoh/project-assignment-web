@@ -7,5 +7,5 @@ export const ROUTES_PATH = {
 
 export const ROUTES = [
   { route: "/", title: "Home", icon: "" },
-  { route: "/pokemon", title: "Pokemon", icon: "" },
+  { route: "/pokemon", title: "Pokemon Type", icon: "" },
 ];

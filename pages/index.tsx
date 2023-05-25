@@ -32,7 +32,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await getPokemons({ limit: 5, offset: 5 });
+        const res = await getPokemons({ limit: 15, offset: 0 });
 
         if (res.results.length) {
           const fetchPokemonsDataset = res.results.map(async (item) => {

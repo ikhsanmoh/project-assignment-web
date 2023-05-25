@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import {
   Box,
@@ -14,6 +15,8 @@ import {
   Modal,
   Backdrop,
 } from "@mui/material";
+
+// Icons
 import { Close as IconClose } from "@mui/icons-material";
 
 // Comopnents
@@ -41,8 +44,14 @@ export interface PokemonModalProps {
 export const PokemonModal: FC<PokemonModalProps> = (props) => {
   const { visible, onClose } = props;
 
+  const router = useRouter();
   const { state } = usePokemonModal();
   const { item } = state;
+
+  const seeDetail = () => {
+    router.push(`/pokemon/detail/${item?.id}`);
+    onClose();
+  };
 
   const renderTitle = () => {
     return (
@@ -165,7 +174,12 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
           </Stack>
         </Stack>
 
-        <Button text="More Detail" textColor="white" mt={8} />
+        <Button
+          text="More Detail"
+          textColor="white"
+          mt={8}
+          onClick={seeDetail}
+        />
       </Stack>
     );
   };
