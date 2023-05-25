@@ -1,29 +1,37 @@
 import { NextPage } from "next";
+import Image from "next/image";
 import useTranslation from "next-translate/useTranslation";
+import { Box, Container, Typography } from "@mui/material";
+
+// Styles
+import { theme } from "@styles/theme";
 
 // Components
 import { BaseLayout } from "@components/layouts";
-import { Box, Container, Typography } from "@mui/material";
-import Image from "next/image";
-import { theme } from "@styles/theme";
 import { FeaturedSection, PokemonList } from "@components/organisms";
-import { POKEMON_LIST } from "@constants/dummy";
 import { PokemonModal } from "@components/molecules";
-import { usePokemonModal } from "src/hooks";
+
+// Hooks
+import { usePokemonModal, useScroll } from "src/hooks";
+
+// Dummy
+import { POKEMON_LIST } from "@constants/dummy";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
 
   const { state: isModalVisible, handleCloseModal } = usePokemonModal();
+  const { scrollTo, scrollToRef } = useScroll();
 
   return (
     <BaseLayout>
-      <FeaturedSection />
+      <FeaturedSection goToPokemonSection={scrollTo} />
 
       <Box
         position="relative"
         sx={{ backgroundColor: theme.palette.warning.light }}
         py={10}
+        ref={scrollToRef}
       >
         <Image
           src={"/images/featured-image-3.png"}
