@@ -66,18 +66,25 @@ const Home: NextPage = () => {
           width={300}
           height={250}
           alt="Featured Image 2"
-          style={{ position: "absolute", left: 0, top: 0, zIndex: -1 }}
+          style={{ position: "absolute", left: 0, top: 0, zIndex: 1 }}
         />
         <Image
           src={"/images/featured-image-2.png"}
           width={300}
           height={250}
           alt="Featured Image 3"
-          style={{ position: "absolute", right: 0, bottom: 0, zIndex: -1 }}
+          style={{ position: "absolute", right: 0, bottom: 0, zIndex: 1 }}
         />
 
         <Container maxWidth="lg">
-          <Box display="flex" flexDirection="column" alignItems="center">
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            textAlign="center"
+            zIndex={1}
+            position="relative"
+          >
             <Typography
               variant="h1"
               fontSize={40}

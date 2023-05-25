@@ -43,7 +43,9 @@ export const CardItem: FC<CardItemProps> = (props) => {
   };
 
   return (
-    <Card sx={{ minWidth: 275, borderRadius: 3 }}>
+    <Card
+      sx={{ minWidth: 275, borderRadius: 3, position: "relative", zIndex: 1 }}
+    >
       <CardActionArea onClick={() => handleOpenModal(item)}>
         <Box sx={{ py: "25px", px: "10px" }}>
           <CardMedia sx={{ display: "flex", justifyContent: "center" }}>

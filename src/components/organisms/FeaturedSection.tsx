@@ -5,16 +5,27 @@ import { Container, Box, Typography } from "@mui/material";
 // Components
 import { Button } from "@components/atoms";
 
+// Hooks
+import { useScreen } from "src/hooks";
+
 export interface FeaturedSectionProps {
   goToPokemonSection?: () => void;
 }
 
 export const FeaturedSection: FC<FeaturedSectionProps> = (props) => {
   const { goToPokemonSection } = props;
+  const { isDesktop } = useScreen();
 
   return (
     <Container maxWidth="lg">
-      <Box display="flex" position="relative" alignItems="center" height={768}>
+      <Box
+        display="flex"
+        position="relative"
+        alignItems="center"
+        justifyContent={isDesktop ? "start" : "center"}
+        textAlign={isDesktop ? "start" : "center"}
+        height={768}
+      >
         <Box maxWidth={534}>
           <Typography
             variant="h1"
@@ -43,13 +54,15 @@ export const FeaturedSection: FC<FeaturedSectionProps> = (props) => {
             onClick={goToPokemonSection}
           />
         </Box>
-        <Image
-          src={"/images/featured-image.jpg"}
-          width={534}
-          height={631}
-          alt="Featured Image"
-          style={{ position: "absolute", right: 0 }}
-        />
+        {isDesktop && (
+          <Image
+            src={"/images/featured-image.jpg"}
+            width={534}
+            height={631}
+            alt="Featured Image"
+            style={{ position: "absolute", right: 0, zIndex: -1 }}
+          />
+        )}
       </Box>
     </Container>
   );
