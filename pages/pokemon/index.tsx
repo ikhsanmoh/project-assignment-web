@@ -1,17 +1,20 @@
-import React, { FC } from "react";
+import type { FC } from "react";
+import { Box, Container, Typography } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
-import { Box, Container, Typography } from "@material-ui/core";
+
+// Components
+import { BaseLayout } from "@components/layouts";
 
 const PokemonList: FC = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    return (
-        <Container maxWidth="xl">
-            <Box component="div" m={10}>
-                <Typography>List Pokemon</Typography>
-            </Box>
-        </Container>
-    );
+  return (
+    <BaseLayout title="Pokemon | List">
+      <Container maxWidth="lg">
+        <Typography>Pokemon Type List</Typography>
+      </Container>
+    </BaseLayout>
+  );
 };
 
 export default PokemonList;
