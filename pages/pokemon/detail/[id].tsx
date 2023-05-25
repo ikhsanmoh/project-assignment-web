@@ -64,7 +64,6 @@ const DetailPokemon: FC = () => {
       try {
         const res = await getPokemonDetail(id as string);
 
-        console.log(res);
         setItem(res);
       } catch (error) {
         console.log("err => ", error);
@@ -122,6 +121,21 @@ const DetailPokemon: FC = () => {
                   size={140}
                   label={item?.stat?.name}
                   status={item?.base_stat}
+                  badgeColor={
+                    idx === 0
+                      ? "primary.main"
+                      : idx === 1
+                      ? "secondary.main"
+                      : idx === 2
+                      ? "warning.main"
+                      : idx === 3
+                      ? "info.main"
+                      : idx === 4
+                      ? "error.main"
+                      : idx === 5
+                      ? "pink.main"
+                      : "neutral.light"
+                  }
                 />
               ))}
             </Stack>
