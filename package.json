@@ -28,7 +28,7 @@
         "@mui/styles": "^5.13.2",
         "@next/bundle-analyzer": "~12.0.7",
         "@reduxjs/toolkit": "^1.9.5",
-        "axios": "~0.24.0",
+        "axios": "^1.4.0",
         "date-fns": "~2.27.0",
         "emotion": "~9.2.12",
         "emotion-server": "~9.2.12",
