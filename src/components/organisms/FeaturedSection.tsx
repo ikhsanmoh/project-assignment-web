@@ -24,7 +24,7 @@ export const FeaturedSection: FC<FeaturedSectionProps> = (props) => {
         alignItems="center"
         justifyContent={isDesktop ? "start" : "center"}
         textAlign={isDesktop ? "start" : "center"}
-        height={768}
+        py={isDesktop ? 16 : 10}
       >
         <Box maxWidth={534}>
           <Typography
