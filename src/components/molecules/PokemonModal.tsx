@@ -215,7 +215,7 @@ export const PokemonModal: FC<PokemonModalProps> = (props) => {
             >
               <Box width={400}>
                 <Image
-                  src={item?.sprites?.front_default ?? ""}
+                  src={item?.sprites?.front_default}
                   alt="Image Pokemon"
                   size={400}
                 />

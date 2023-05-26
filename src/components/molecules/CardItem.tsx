@@ -1,5 +1,4 @@
 import type { FC } from "react";
-import Image from "next/image";
 import {
   Box,
   Typography,
@@ -11,7 +10,7 @@ import {
 } from "@mui/material";
 
 // Components
-import { BadgeType } from "@components/atoms";
+import { BadgeType, Image } from "@components/atoms";
 
 // Hooks
 import { usePokemonModal } from "src/hooks";
@@ -28,11 +27,17 @@ export const CardItem: FC<CardItemProps> = (props) => {
 
   const renderTypes = () => {
     return (
-      <Stack direction="row" gap={1} flexWrap={"wrap"}>
-        {item.types.map((item: any, idx: number) => (
-          <BadgeType key={idx} label={`Type ${item.slot}`} type={item.slot} />
-        ))}
-      </Stack>
+      item?.types.length && (
+        <Stack direction="row" gap={1} flexWrap={"wrap"}>
+          {item?.types?.map((item: any, idx: number) => (
+            <BadgeType
+              key={idx}
+              label={`Type ${item?.slot}`}
+              type={item?.slot}
+            />
+          ))}
+        </Stack>
+      )
     );
   };
 
@@ -43,14 +48,12 @@ export const CardItem: FC<CardItemProps> = (props) => {
       <CardActionArea onClick={() => handleOpenModal(item)}>
         <Box sx={{ py: "25px", px: "10px" }}>
           <CardMedia sx={{ display: "flex", justifyContent: "center" }}>
-            <Box flex={1} height={275} position={"relative"}>
-              <Image
-                src={item.sprites.front_default ?? "/images/featured-image.jpg"}
-                alt="Pokemon Image"
-                style={{ position: "absolute" }}
-                fill
-              />
-            </Box>
+            <Image
+              flex={1}
+              src={item?.sprites?.front_default}
+              alt="Pokemon Image"
+              size={275}
+            />
           </CardMedia>
 
           <CardContent>
@@ -61,7 +64,7 @@ export const CardItem: FC<CardItemProps> = (props) => {
               fontSize={20}
               fontWeight={700}
             >
-              {formatNumberWithZeros(item.id, 3)}
+              {formatNumberWithZeros(item?.id ?? 0, 3)}
             </Typography>
             <Typography
               color="neutral.dark"
@@ -70,7 +73,7 @@ export const CardItem: FC<CardItemProps> = (props) => {
               fontSize={40}
               fontWeight={700}
             >
-              {item.name}
+              {item?.name}
             </Typography>
 
             {renderTypes()}

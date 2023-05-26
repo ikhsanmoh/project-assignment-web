@@ -1,5 +1,4 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import NextImage from "next/image";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { Box, Container, Stack, Typography } from "@mui/material";
@@ -9,7 +8,7 @@ import { ArrowForward as IconArrowForward } from "@mui/icons-material";
 
 // Components
 import { BaseLayout } from "@components/layouts";
-import { BadgeEvolution, BadgeStatus } from "@components/atoms";
+import { BadgeEvolution, BadgeStatus, Image } from "@components/atoms";
 import { CardPokemonDetail } from "@components/molecules";
 
 // Hooks
@@ -90,12 +89,12 @@ const DetailPokemon: FC = () => {
               sx={sliderStyle}
             >
               {otherImages.map((item, idx) => (
-                <NextImage
+                <Image
                   key={idx}
-                  src={item.url}
-                  alt={`Image ${item.name}`}
-                  width={200}
-                  height={200}
+                  flex={1}
+                  src={item?.url}
+                  alt={`Image ${item?.name}`}
+                  size={200}
                 />
               ))}
             </Stack>

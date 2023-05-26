@@ -44,7 +44,7 @@ export const Image: FC<ImageProps> = (props) => {
         overflow="hidden"
       >
         <NextImage
-          src={src ?? ""}
+          src={src ?? "/images/placeholder.jpg"}
           alt={alt}
           style={{ position: "absolute" }}
           fill
