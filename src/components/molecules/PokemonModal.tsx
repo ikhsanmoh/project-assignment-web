@@ -1,6 +1,5 @@
 import type { FC } from "react";
 import { useRouter } from "next/router";
-import NextImage from "next/image";
 import {
   Box,
   Card,
